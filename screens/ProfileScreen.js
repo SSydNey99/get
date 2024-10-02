@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   const pins = [
     { id: 1, image: 'https://i.pinimg.com/564x/af/b3/87/afb38702b05630669b0d0a1e792b7917.jpg' },
     { id: 2, image: 'https://i.pinimg.com/564x/14/e4/98/14e49899512446206c3c875712d518b8.jpg' },
@@ -14,6 +14,9 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={30} color="#fff" />
+        </TouchableOpacity>
         <Ionicons name="person-circle" size={50} color="#fff" />
         <Text style={styles.headerText}>Vier</Text>
       </View>
@@ -40,7 +43,7 @@ const ProfileScreen = () => {
       <ScrollView>
         <View style={styles.grid}>
           {pins.map(pin => (
-            <TouchableOpacity key={pin.id} style={styles.pinItem}>
+            <TouchableOpacity key={pin.id} style={styles.pinItem} onPress={() => navigation.navigate('ImageDetail', { image: pin.image })}>
               <Image source={{ uri: pin.image }} style={styles.pinImage} />
             </TouchableOpacity>
           ))}

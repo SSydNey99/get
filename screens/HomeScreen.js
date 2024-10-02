@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
-import PinterestCard from '../components/PinterestCard';
+import PinterestCard from '../components/PinterestCard'; // อย่าลืมตรวจสอบว่ามีการสร้าง PinterestCard ไว้แล้ว
+import { useNavigation } from '@react-navigation/native'; // เพิ่มการนำเข้า useNavigation
 
 export default function HomeScreen() {
+  const navigation = useNavigation(); // สร้าง instance ของ useNavigation
   const [images, setImages] = useState([]);
-  
-
-  
-  
 
   useEffect(() => {
+    // สร้างข้อมูลภาพที่ดึงมา
     const fetchedImages = [
-      { id: '1', image: 'https://i.pinimg.com/736x/dc/80/65/dc8065622d3c6c930521427c0e555925.jpg', height: 320, title: 'Vanitas                           ⋯' },
+      { id: '1', image: 'https://i.pinimg.com/736x/dc/80/65/dc8065622d3c6c930521427c0e555925.jpg', height: 320, title: 'Vanitas' },
       { id: '2', image: 'https://i.pinimg.com/736x/d9/fc/7f/d9fc7f2df1d9633be5ab8bd0fba4ca8f.jpg', height: 320, title: 'Jeanne ❄️✨' },
       { id: '3', image: 'https://i.pinimg.com/736x/c8/2b/c2/c82bc2c1c19d7952d69e6045eec0833d.jpg', height: 200, title: '♨ᴠᴀɴíᴛᴀs' },
       { id: '4', image: 'https://i.pinimg.com/736x/23/93/cd/2393cd5900f529e0cc3e716476c0f753.jpg', height: 200, title: 'な | dominique ꜝꜞ' },
@@ -21,20 +20,23 @@ export default function HomeScreen() {
     setImages(fetchedImages); 
   }, []);
 
- 
-  
+  // ฟังก์ชันสำหรับการกดที่ภาพ
+  const handlePress = (item) => {
+    navigation.navigate('Detail', { image: item.image, label: item.title });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-  data={images}
-  renderItem={({ item }) => <PinterestCard item={item} />}
-  keyExtractor={(item) => item.id}
-  numColumns={2}
-  contentContainerStyle={styles.grid}
-  scrollEnabled={true}
-/>
-
+        data={images}
+        renderItem={({ item }) => (
+          <PinterestCard item={item} onPress={() => handlePress(item)} /> // ส่งฟังก์ชัน onPress
+        )}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        contentContainerStyle={styles.grid}
+        scrollEnabled={true}
+      />
     </SafeAreaView>
   );
 }

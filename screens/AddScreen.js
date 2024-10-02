@@ -63,7 +63,7 @@ export default function AddScreen() {
               <View style={styles.option}>
                 <TouchableOpacity onPress={pickImage}>
                   <FontAwesome5 name="thumbtack" size={24} color="white" />
-                  <Text style={styles.optionText}>พิน</Text>
+                  <Text style={styles.optionText}>เพิ่ม</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.option}>
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor : '#000000',
   },
   openButton: {
     backgroundColor: '#333',

@@ -9,20 +9,44 @@ import ChatScreen from '../screens/ChatScreen';
 import AddScreen from '../screens/AddScreen';
 import SearchScreen from '../screens/SearchScreen';
 import { Ionicons } from '@expo/vector-icons';
+import MessageDetailScreen from '../screens/MessageDetailScreen';
+import ImageDetailScreen from '../screens/ImageDetailScreen'; 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const HomeStack = () => (
   <Stack.Navigator>
-    <Stack.Screen name="Home" component={HomeScreen} />
-    <Stack.Screen name="Detail" component={DetailScreen} />
+    <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+    <Stack.Screen name="Detail" component={DetailScreen}options={{ headerShown: false }} />
+    <Stack.Screen name="ImageDetail" component={ImageDetailScreen} />
   </Stack.Navigator>
 );
 
+const SearchStack = () => (
+  <Stack.Navigator initialRouteName="Search">
+    <Stack.Screen name="hello" component={SearchScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="Detail" component={DetailScreen}options={{ headerShown: false }} />
+  </Stack.Navigator>
+);
+ const ChatStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="ChatHome" component={ChatScreen}options={{ headerShown: false }} />
+    <Stack.Screen name="MessageDetail" component={MessageDetailScreen}options={{ headerShown: false }} />
+    <Stack.Screen name="ImageDetail" component={ImageDetailScreen}  />
+  </Stack.Navigator>
+);
+const ProfileStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="welcome to my Profile" component={ProfileScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="ImageDetail" component={ImageDetailScreen} options={{ headerShown: false }} />
+  </Stack.Navigator>
+);
+
+
 const AppNavigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer> 
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -42,18 +66,19 @@ const AppNavigator = () => {
 
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: '#fff', // สีเมื่อแท็บถูกเลือก
-          tabBarInactiveTintColor: '#888', // สีเมื่อแท็บไม่ได้ถูกเลือก
+          tabBarActiveTintColor: '#fff',
+          tabBarInactiveTintColor: '#888',
           tabBarStyle: {
-            backgroundColor: '#000', // สีพื้นหลังของแท็บบาร์เป็นสีดำ
+            backgroundColor: '#000',
           },
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
-        <Tab.Screen name="Chat" component={ChatScreen} />
+        <Tab.Screen name="Home" component={HomeStack} />
+        <Tab.Screen name="Profile" component={ProfileStack} />
+        <Tab.Screen name="Chat" component={ChatStack} />
         <Tab.Screen name="Add" component={AddScreen} />
-        <Tab.Screen name="Search" component={SearchScreen} />
+        <Tab.Screen name="Search" component={SearchStack} />
+        
       </Tab.Navigator>
     </NavigationContainer>
   );

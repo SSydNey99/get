@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native'; // นำเข้า useNavigation
 
 const ChatScreen = () => {
+  const navigation = useNavigation(); // สร้าง navigation object
+
   const chatMessages = [
     { id: 1, image: 'https://i.pinimg.com/564x/b3/69/16/b369169101ac495969f34fab193e9164.jpg', title: 'หน้าฟีดหลักมีพินใหม่ๆ', time: '5 ชม.' },
     { id: 2, image: 'https://i.pinimg.com/564x/01/c3/d4/01c3d4c815d60c64578058c7ebddd713.jpg', title: 'ศิลปะการ์ตูน สำหรับคุณ', time: '22 ชม.' },
@@ -14,11 +17,19 @@ const ChatScreen = () => {
     { id: 8, image: 'https://i.pinimg.com/564x/f0/b0/2f/f0b02f489b5b5c58d3ee0d877948dbbb.jpg', title: 'ไอเดียสำหรับคุณ', time: '3 ชม.' },
   ];
 
+  const handlePress = (item) => {
+    navigation.navigate('MessageDetail', { // นำทางไปยัง MessageDetail
+      image: item.image,
+      title: item.title,
+      time: item.time,
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         {chatMessages.map(item => (
-          <TouchableOpacity key={item.id} style={styles.messageContainer}>
+          <TouchableOpacity key={item.id} style={styles.messageContainer} onPress={() => handlePress(item)}>
             <Image source={{ uri: item.image }} style={styles.avatar} />
             <View style={styles.messageContent}>
               <Text style={styles.title}>{item.title}</Text>
@@ -34,7 +45,7 @@ const ChatScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#d0d0d0', // พื้นหลังสีดำ
+    backgroundColor: '#000000',
   },
   messageContainer: {
     flexDirection: 'row',
@@ -54,7 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    color: '#000000',
+    color: '#ffffff',
     fontSize: 16,
   },
   time: {
